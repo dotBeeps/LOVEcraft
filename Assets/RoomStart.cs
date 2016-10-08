@@ -26,6 +26,21 @@ public class RoomStart : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
-	}
+	    if (!northDoor)
+        {
+            gameObject.transform.FindChild("north door wall").gameObject.SetActive(true);
+        }
+        if (!eastDoor)
+        {
+            gameObject.transform.FindChild("east door wall").gameObject.SetActive(true);
+        }
+        if (!southDoor)
+        {
+            gameObject.transform.FindChild("south door wall").gameObject.SetActive(true);
+        }
+        if (!westDoor)
+        {
+            gameObject.transform.FindChild("west door wall").gameObject.SetActive(true);
+        }
+    }
 }
