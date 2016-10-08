@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e0d803dfae55ffe4ea30cfc785b761d3
+timeCreated: 1475966667
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - healthSlider: {instanceID: 0}
+  - damageImage: {instanceID: 0}
+  - deathClip: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
