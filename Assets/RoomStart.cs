@@ -8,6 +8,8 @@ public class RoomStart : MonoBehaviour {
     public bool eastDoor = false;
     public bool westDoor = false;
 
+    public GameObject miniMapPart;
+
     public GameObject northRoom;
     public GameObject southRoom;
     public GameObject eastRoom;

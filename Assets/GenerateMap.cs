@@ -165,35 +165,48 @@ public class GenerateMap : MonoBehaviour {
             rooms.Add(newRoom);
         }
         PrintRoomArray(roomArray);
-        InitiateRooms(firstRoom, Vector3.zero);
+        InitiateRooms(firstRoom, Vector3.zero, new Vector3(1000,1000));
     }
 
-    void InitiateRooms(Room firstRoom, Vector3 pos)
+    void InitiateRooms(Room firstRoom, Vector3 pos, Vector3 miniPos)
     {
-        makeNewRoom(pos,firstRoom.x,firstRoom.y);
+        makeNewRoom(pos,miniPos,firstRoom.x,firstRoom.y);
         firstRoom.generated = true;
         for (int i = 0; i < 4; i++)
         {
             if (firstRoom.adjacentRooms[i] != null && !firstRoom.adjacentRooms[i].generated)
             {
-                InitiateRooms(firstRoom.adjacentRooms[i], pos + getOffset(i));
+                InitiateRooms(firstRoom.adjacentRooms[i], pos + getOffset(i), miniPos + getMiniOffset(i));
             }
         }
     }
 
-    GameObject makeNewRoom(Vector3 curRoomTransform,int x, int y)
+    GameObject makeNewRoom(Vector3 curRoomTransform, Vector3 curMiniTransform,int x, int y)
     {
         GameObject room = Instantiate(Resources.Load("Rooms/RoomBase") as GameObject, curRoomTransform, Quaternion.identity) as GameObject;
+        GameObject miniRoom = Instantiate(Resources.Load("Rooms/minimaproom") as GameObject, curMiniTransform, Quaternion.identity) as GameObject;
         RoomStart roomScript = room.GetComponent<RoomStart>();
+        roomScript.miniMapPart = miniRoom;
         if (roomArray[x, y + 1] != null)
+        {
             roomScript.northDoor = true;
+            miniRoom.transform.FindChild("minimapconnectornorth").gameObject.SetActive(true);
+        }
         if (roomArray[x, y - 1] != null)
+        {
             roomScript.southDoor = true;
-        if (roomArray[x+1, y] != null)
+            miniRoom.transform.FindChild("minimapconnectorsouth").gameObject.SetActive(true);
+        }
+        if (roomArray[x + 1, y] != null)
+        {
             roomScript.eastDoor = true;
-        if (roomArray[x-1, y] != null)
+            miniRoom.transform.FindChild("minimapconnectoreast").gameObject.SetActive(true);
+        }
+        if (roomArray[x - 1, y] != null)
+        {
             roomScript.westDoor = true;
-
+            miniRoom.transform.FindChild("minimapconnectorwest").gameObject.SetActive(true);
+        }
         return room;
     }
 
@@ -214,8 +227,20 @@ public class GenerateMap : MonoBehaviour {
             return new Vector3(-19, 0);
     }
 
-	// Update is called once per frame
-	void Update () {
+    Vector3 getMiniOffset(int dir)
+    {
+        if (dir == 0)
+            return new Vector3(0, 0.6f);
+        else if (dir == 1)
+            return new Vector3(1f, 0);
+        else if (dir == 2)
+            return new Vector3(0, -0.6f);
+        else
+            return new Vector3(-1f, 0);
+    }
+
+    // Update is called once per frame
+    void Update () {
 	
 	}
 }
