@@ -3,10 +3,10 @@ using System.Collections;
 
 public class RoomStart : MonoBehaviour {
 
-    public bool northDoor = true;
-    public bool southDoor = true;
-    public bool eastDoor = true;
-    public bool westDoor = true;
+    public bool northDoor = false;
+    public bool southDoor = false;
+    public bool eastDoor = false;
+    public bool westDoor = false;
 
     public GameObject northRoom;
     public GameObject southRoom;

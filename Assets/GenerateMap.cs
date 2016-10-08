@@ -170,7 +170,7 @@ public class GenerateMap : MonoBehaviour {
 
     void InitiateRooms(Room firstRoom, Vector3 pos)
     {
-        makeNewRoom(pos);
+        makeNewRoom(pos,firstRoom.x,firstRoom.y);
         firstRoom.generated = true;
         for (int i = 0; i < 4; i++)
         {
@@ -181,9 +181,20 @@ public class GenerateMap : MonoBehaviour {
         }
     }
 
-    GameObject makeNewRoom(Vector3 curRoomTransform)
+    GameObject makeNewRoom(Vector3 curRoomTransform,int x, int y)
     {
-        return Instantiate(Resources.Load("Rooms/RoomBase") as GameObject, curRoomTransform, Quaternion.identity) as GameObject;
+        GameObject room = Instantiate(Resources.Load("Rooms/RoomBase") as GameObject, curRoomTransform, Quaternion.identity) as GameObject;
+        RoomStart roomScript = room.GetComponent<RoomStart>();
+        if (roomArray[x, y + 1] != null)
+            roomScript.northDoor = true;
+        if (roomArray[x, y - 1] != null)
+            roomScript.southDoor = true;
+        if (roomArray[x+1, y] != null)
+            roomScript.eastDoor = true;
+        if (roomArray[x-1, y] != null)
+            roomScript.westDoor = true;
+
+        return room;
     }
 
     bool isObstructed(int dir, Transform curRoomTransform)
