@@ -22,9 +22,9 @@ public class PlayerHealth : MonoBehaviour{
 
 	void Awake (){
 		// Setting up the references.
-		anim = GetComponent <Animator> ();
-		playerAudio = GetComponent <AudioSource> ();
-		playerMovement = GetComponent <Movement> ();
+		//anim = GetComponent <Animator> ();
+		//playerAudio = GetComponent <AudioSource> ();
+		//playerMovement = GetComponent <Movement> ();
 		//playerShooting = GetComponentInChildren <PlayerShooting> ();
 
 		// Set the initial health of the player.
@@ -52,7 +52,6 @@ public class PlayerHealth : MonoBehaviour{
 		//Check collision name
 		Debug.Log("collision name = " + col.gameObject.name);
 		if(col.gameObject.name == "EnemyProjectile" || col.gameObject.name == "EnemyProjectile(Clone)"){
-			Destroy(col.gameObject);
 			damaged = true;
 			TakeDamage(50);
 		}
@@ -66,7 +65,7 @@ public class PlayerHealth : MonoBehaviour{
 		currentHealth -= amount;
 
 		// Set the health bar's value to the current health.
-		healthSlider.value = currentHealth;
+		//healthSlider.value = currentHealth;
 
 		// Play the hurt sound effect.
 		//playerAudio.Play ();

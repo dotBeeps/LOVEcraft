@@ -40,12 +40,18 @@ public class EnemyProjectile : MonoBehaviour {
 			//remove bullet if it goes outside the screen
 			Vector2 min = Camera.main.ViewportToWorldPoint (new Vector2 (0, 0)); //bottom left
 			Vector2 max = Camera.main.ViewportToWorldPoint (new Vector2 (1, 1)); //top right
-
-			//if the bullet leaves the screen, destroy it
 			if ((transform.position.x < min.x) || (transform.position.x > max.x) ||
 			    (transform.position.y < min.y) || (transform.position.y > max.y)) {
 				Destroy (gameObject);
 			}
+		}
+	}
+
+	void OnCollisionEnter2D (Collision2D col){
+		//Check collision name
+		Debug.Log("collision name = " + col.gameObject.name);
+		if(col.gameObject.name != "enemy"){
+			Destroy(gameObject);
 		}
 	}
 }
