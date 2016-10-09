@@ -18,7 +18,7 @@ public class EnemyShooting : MonoBehaviour{
 	//function to fire enemy projectile
 	void FireEnemyProjectile(){
 		//get reference to player
-		GameObject player = GameObject.Find("guy_1");
+		GameObject player = GameObject.Find("Player");
 
 		if(player != null){ //if player isn't dead
 			//instantiate enemy projectile
