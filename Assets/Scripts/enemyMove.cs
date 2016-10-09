@@ -3,7 +3,7 @@ using System.Collections;
 
 public class enemyMove : MonoBehaviour {
     GameObject player;
-    float MoveSpeed = 5f;
+    float MoveSpeed = 2.5f;
     // Use this for initialization
     void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
