@@ -15,7 +15,7 @@ public class enemyMove : MonoBehaviour {
         
         Vector3 fixedTarget = player.transform.position;
         transform.rotation = Quaternion.LookRotation(Vector3.forward, fixedTarget- transform.position);
-        if (Vector3.Distance(transform.position, player.transform.position) >= .5)
+        if (Vector3.Distance(transform.position, player.transform.position) > 0)
         {
             transform.position = Vector2.MoveTowards(transform.position, fixedTarget, MoveSpeed * Time.deltaTime);
         }
@@ -23,7 +23,6 @@ public class enemyMove : MonoBehaviour {
         {
             return;
         }
-            
 
 	}
 }
