@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerControl : MonoBehaviour {
 
@@ -18,6 +19,8 @@ public class PlayerControl : MonoBehaviour {
 
     [SerializeField]
     private GameObject currentWeapon;
+
+    private List<GameObject> rangedInventory = new List<GameObject>();
 
     private Vector2 mousePos;
     private Vector3 screenPos;
@@ -38,7 +41,32 @@ public class PlayerControl : MonoBehaviour {
     void FixedUpdate()
     {
         DoMovement();
+        DoAttack();
+        DoWeaponSwitch();
+    }
 
+    private void DoWeaponSwitch()
+    {
+        for (int i = 0; i < rangedInventory.Count; i++)
+        {
+            if (Input.GetKeyDown(i.ToString()))
+            {
+                if (!currentWeapon.name.Equals(rangedInventory[i].name))
+                    SwapWeapon(i);
+            }
+        }
+    }
+
+    private void SwapWeapon(int invSlot)
+    {
+        Destroy(currentWeapon);
+        currentWeapon = rangedInventory[invSlot];
+        currentWeapon = Instantiate(rangedInventory[invSlot]) as GameObject;
+        currentWeapon.transform.SetParent(transform);
+    }
+
+    private void DoAttack()
+    {
         Vector2 attackDir = new Vector2(Input.GetAxisRaw("FireHorizontal"), Input.GetAxisRaw("FireVertical"));
 
         if (attackCooldownTimer < attackCooldown)
@@ -48,7 +76,7 @@ public class PlayerControl : MonoBehaviour {
         }
         if (attackDir != Vector2.zero)
         {
-            currentWeapon.SendMessage("Attack",attackDir);
+            currentWeapon.SendMessage("Attack", attackDir);
             attackCooldownTimer = 0f;
         }
     }
