@@ -30,16 +30,18 @@ public class Movement : MonoBehaviour {
         mousePos = Input.mousePosition;
         screenPos = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x,mousePos.y,5.0f));
 
-        transform.rotation = Quaternion.LookRotation(Vector3.forward, screenPos - transform.position);
+        //transform.rotation = Quaternion.LookRotation(Vector3.forward, screenPos - transform.position);
 
         rigidbody.velocity = new Vector2(Mathf.Lerp(0, Input.GetAxis("Horizontal") * walkSpeed, 0.8f), Mathf.Lerp(0, Input.GetAxis("Vertical") * walkSpeed, 0.8f));
 
-        if (Input.GetAxisRaw("Horizontal")!=0 || Input.GetAxisRaw("Vertical")!=0)
+        if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
         {
-            //anim.SetBool("Walking", true);
-        } else
-        {
-            //anim.SetBool("Walking", false);
+            Vector2 lookHere = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            float angle = Mathf.Atan2(lookHere.y, lookHere.x) * Mathf.Rad2Deg - 90;
+
+            float lerpAngle = Mathf.LerpAngle(transform.rotation.eulerAngles.z, angle, 10.0f * Time.deltaTime);
+
+            transform.rotation = Quaternion.AngleAxis(lerpAngle, Vector3.forward);
         }
     }
 
