@@ -9,15 +9,24 @@ public class GameManager : MonoBehaviour {
 	}
 
 	//buncha variables (hmu with more variables)
-	private int variable;
+	private static int health = 100;
+	private static int damage = 10;
 
 	//set & get methods for all those variables
-	public void setVariable(int newVar){
-		variable = newVar;
+	public void setHealth(int newVar){
+		health = newVar;
 	}
 
-	public int getVariable(){
-		return variable;
+	public int getHealth(){
+		return health;
+	}
+
+	public void setDamage(int newVar){
+		damage = newVar;
+	}
+
+	public int getDamage(){
+		return damage;
 	}
 		
 	void Awake()
