@@ -4,6 +4,18 @@ using System.Collections.Generic;
 
 public class PlayerControl : MonoBehaviour {
 
+    private KeyCode[] keyCodes = {
+         KeyCode.Alpha1,
+         KeyCode.Alpha2,
+         KeyCode.Alpha3,
+         KeyCode.Alpha4,
+         KeyCode.Alpha5,
+         KeyCode.Alpha6,
+         KeyCode.Alpha7,
+         KeyCode.Alpha8,
+         KeyCode.Alpha9,
+     };
+
     public float walkSpeed = 3;
     private float maxSpeed;
     private float curSpeed;
@@ -19,7 +31,7 @@ public class PlayerControl : MonoBehaviour {
 
     [SerializeField]
     private GameObject currentWeapon;
-
+    [SerializeField]
     private List<GameObject> rangedInventory = new List<GameObject>();
 
     private Vector2 mousePos;
@@ -30,6 +42,7 @@ public class PlayerControl : MonoBehaviour {
     // Use this for initialization
     void Start () {
         attackCooldownTimer = attackCooldown;
+        rangedInventory.Add(currentWeapon);
 	}
 
     void Awake ()
@@ -49,8 +62,9 @@ public class PlayerControl : MonoBehaviour {
     {
         for (int i = 0; i < rangedInventory.Count; i++)
         {
-            if (Input.GetKeyDown(i.ToString()))
+            if (Input.GetKey(keyCodes[i]))
             {
+                Debug.Log("Key " + i+1 + " is depressed.");
                 if (!currentWeapon.name.Equals(rangedInventory[i].name))
                     SwapWeapon(i);
             }
@@ -59,10 +73,32 @@ public class PlayerControl : MonoBehaviour {
 
     private void SwapWeapon(int invSlot)
     {
-        Destroy(currentWeapon);
+        currentWeapon.SetActive(false);
+        currentWeapon.hideFlags = HideFlags.HideInHierarchy;
         currentWeapon = rangedInventory[invSlot];
-        currentWeapon = Instantiate(rangedInventory[invSlot]) as GameObject;
+        currentWeapon.hideFlags = HideFlags.None;
+        currentWeapon.SetActive(true);
         currentWeapon.transform.SetParent(transform);
+    }
+
+    public void PickupItem(GameObject item)
+    {
+        if (item.GetComponent<RangedWeapon>() != null)
+        {
+            rangedInventory.Add(item);
+            item.transform.SetParent(transform);
+            item.transform.position = Vector3.zero;
+            item.GetComponent<Collider2D>().enabled = false;
+            item.SetActive(false);
+            item.hideFlags = HideFlags.HideInHierarchy;
+        }
+        //if (item.GetComponent<MeleeWeapon> != null)
+        if (item.GetComponent<Item>() != null)
+        {
+
+        }
+
+        
     }
 
     private void DoAttack()

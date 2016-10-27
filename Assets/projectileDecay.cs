@@ -15,11 +15,13 @@ public class projectileDecay : MonoBehaviour {
 	
     void OnCollisionEnter2D(Collision2D col)
     {
+        Debug.Log("Projectile died by collision.");
         Destroy(gameObject);
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
+        Debug.Log("Projectile died by trigger with tag: " + col.tag + " With gameobject name: " + col.name);
         Destroy(gameObject);
     }
 
@@ -28,6 +30,7 @@ public class projectileDecay : MonoBehaviour {
         hasLived += Time.deltaTime;
         if (hasLived > lifespan)
         {
+            Debug.Log("Projectile died of old age.");
             Destroy(gameObject);
         }
     }

@@ -22,9 +22,10 @@ GameObject:
   - 212: {fileID: 212000012527192434}
   - 114: {fileID: 114000013528779928}
   - 50: {fileID: 50000012437600512}
-  m_Layer: 8
+  - 61: {fileID: 61000013623336338}
+  m_Layer: 11
   m_Name: mixtape 1
-  m_TagString: Untagged
+  m_TagString: RangedWeapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010377890056}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.5684385, y: -0.0013520718, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -59,6 +60,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!61 &61000013623336338
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010377890056}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0.25576097, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 0.54, y: 0.32}
 --- !u!114 &114000013528779928
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -71,6 +86,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inInv: 0
+  moveSpeed: 0
+  maxMoveSpeed: 0
   weaponProjectile: {fileID: 1000011201834870, guid: f7b0efbf8d9114d4fba27f8fd6654300,
     type: 2}
   vel: 17.5
@@ -103,7 +120,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300000, guid: e021cb5fb330f0d44bf47097e49f3b72, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9871505f5a43a1243afbd84b4bd015ce, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

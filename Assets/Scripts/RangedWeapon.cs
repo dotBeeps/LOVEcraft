@@ -21,7 +21,7 @@ public class RangedWeapon : Weapon {
     public override void Attack(Vector2 dirAttack)
     {
         dirAttack = dirAttack * vel;
-        Debug.Log(dirAttack.x + " " + dirAttack.y);
+        //Debug.Log(dirAttack.x + " " + dirAttack.y);
 
         GameObject projectile;
         projectile = Instantiate(weaponProjectile, transform.position, Quaternion.identity) as GameObject;
