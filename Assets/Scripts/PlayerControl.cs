@@ -64,7 +64,7 @@ public class PlayerControl : MonoBehaviour {
         {
             if (Input.GetKey(keyCodes[i]))
             {
-                Debug.Log("Key " + i+1 + " is depressed.");
+                Debug.Log("Key " + i + " is depressed.");
                 if (!currentWeapon.name.Equals(rangedInventory[i].name))
                     SwapWeapon(i);
             }
@@ -74,11 +74,12 @@ public class PlayerControl : MonoBehaviour {
     private void SwapWeapon(int invSlot)
     {
         currentWeapon.SetActive(false);
-        currentWeapon.hideFlags = HideFlags.HideInHierarchy;
+        //currentWeapon.hideFlags = HideFlags.HideInHierarchy;
         currentWeapon = rangedInventory[invSlot];
-        currentWeapon.hideFlags = HideFlags.None;
+        //currentWeapon.hideFlags = HideFlags.None;
         currentWeapon.SetActive(true);
-        currentWeapon.transform.SetParent(transform);
+        if (currentWeapon.transform.parent != transform)
+            currentWeapon.transform.SetParent(transform);
     }
 
     public void PickupItem(GameObject item)
@@ -88,9 +89,12 @@ public class PlayerControl : MonoBehaviour {
             rangedInventory.Add(item);
             item.transform.SetParent(transform);
             item.transform.position = Vector3.zero;
+            item.SendMessage("pickedUp");
+            item.transform.localPosition = new Vector3(0.56f, 0);
             item.GetComponent<Collider2D>().enabled = false;
             item.SetActive(false);
-            item.hideFlags = HideFlags.HideInHierarchy;
+            Destroy(item.GetComponent<Rigidbody2D>());
+            //item.hideFlags = HideFlags.HideInHierarchy;
         }
         //if (item.GetComponent<MeleeWeapon> != null)
         if (item.GetComponent<Item>() != null)

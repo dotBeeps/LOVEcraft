@@ -134,17 +134,8 @@ Prefab:
       propertyPath: inInv
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114000013528779928, guid: c6e3f37dce6db2b459d727a33ac73e24,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 61000010389441426, guid: c6e3f37dce6db2b459d727a33ac73e24,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 50000012437600512, guid: c6e3f37dce6db2b459d727a33ac73e24, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: c6e3f37dce6db2b459d727a33ac73e24, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &312301850

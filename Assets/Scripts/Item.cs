@@ -32,6 +32,11 @@ public class Item : MonoBehaviour {
             col.SendMessage("PickupItem", gameObject);
     }
 
+    public void pickedUp()
+    {
+        inInv = true;
+    }
+
     void FixedUpdate()
     {
         if (!inInv && Vector2.Distance(transform.position, player.position) < 4f)
