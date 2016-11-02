@@ -16,6 +16,11 @@ public class PlayerControl : MonoBehaviour {
          KeyCode.Alpha9,
      };
 
+    [SerializeField]
+    private GameObject[] JimNorm = new GameObject[6];
+    [SerializeField]
+    private GameObject[] JimSide = new GameObject[6];
+
     public float walkSpeed = 3;
     private float maxSpeed;
     private float curSpeed;
@@ -33,11 +38,19 @@ public class PlayerControl : MonoBehaviour {
     private GameObject currentWeapon;
     [SerializeField]
     private List<GameObject> rangedInventory = new List<GameObject>();
+    [SerializeField]
+    private Sprite backHead;
+    [SerializeField]
+    private Sprite backBody;
+    [SerializeField]
+    private Sprite frontHead;
+    [SerializeField]
+    private Sprite frontBody;
 
     private Vector2 mousePos;
     private Vector3 screenPos;
 
-
+    private bool facingLeft = true;
 
     // Use this for initialization
     void Start () {
@@ -125,17 +138,59 @@ public class PlayerControl : MonoBehaviour {
     {
         rigidbody.velocity = new Vector2(Mathf.Lerp(0, Input.GetAxis("Horizontal") * walkSpeed, 0.8f), Mathf.Lerp(0, Input.GetAxis("Vertical") * walkSpeed, 0.8f));
 
-        if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
-            lookTarget = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        if (Input.GetAxisRaw("FireHorizontal") != 0 || Input.GetAxisRaw("FireVertical") != 0)
-            lookTarget = new Vector2(Input.GetAxisRaw("FireHorizontal"), Input.GetAxisRaw("FireVertical"));
+        float hor = Input.GetAxisRaw("Horizontal");
+        float ver = Input.GetAxisRaw("Vertical");
 
-        float angle = Mathf.Atan2(lookTarget.y, lookTarget.x) * Mathf.Rad2Deg - 90;
+        if (hor != 0 || ver != 0)
+            anim.SetBool("Walking", true);
+        if (hor == 0 && ver == 0)
+            anim.SetBool("Walking", false);
 
-        float lerpAngle = Mathf.LerpAngle(transform.rotation.eulerAngles.z, angle, 10.0f * Time.deltaTime);
+        if (hor != 0 && !anim.GetBool("Sideways"))
+        {
+            anim.SetBool("Sideways", true);
+            foreach (GameObject g in JimNorm)
+            {
+                g.SetActive(false);
+            }
+            foreach (GameObject g in JimSide)
+            {
+                g.SetActive(true);
+            }
+        }
 
-        transform.rotation = Quaternion.AngleAxis(lerpAngle, Vector3.forward);
+        if ((hor == 1 && facingLeft) || (hor == -1 && !facingLeft))
+        {
+            facingLeft = !facingLeft;
+            transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y);
+        }
+
+        if (ver != 0 && anim.GetBool("Sideways"))
+        {
+            anim.SetBool("Sideways", false);
+            foreach (GameObject g in JimNorm)
+            {
+                g.SetActive(true);
+            }
+            foreach (GameObject g in JimSide)
+            {
+                g.SetActive(false);
+            }
+        }
+        if (ver == 1)
+        {
+            //frontHead = JimNorm[0].GetComponent<SpriteRenderer>().sprite;
+            JimNorm[0].GetComponent<SpriteRenderer>().sprite = backHead;
+            //frontBody = JimNorm[1].GetComponent<SpriteRenderer>().sprite;
+            JimNorm[1].GetComponent<SpriteRenderer>().sprite = backBody;
+        }
+        if (ver == -1)
+        {
+            JimNorm[0].GetComponent<SpriteRenderer>().sprite = frontHead;
+            JimNorm[1].GetComponent<SpriteRenderer>().sprite = frontBody;
+        }
         
+
     }
 
 
