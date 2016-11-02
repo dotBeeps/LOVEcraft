@@ -17,7 +17,7 @@ public class PlayerHealth : MonoBehaviour{
 
 	Animator anim;                                              // Reference to the Animator component.
 	AudioSource playerAudio;                                    // Reference to the AudioSource component.
-	Movement playerMovement;                                    // Reference to the player's movement.
+	PlayerControl playerMovement;                                    // Reference to the player's movement.
 	//PlayerShooting playerShooting;                            // Reference to the PlayerShooting script.
 	public bool isDead;                                         // Whether the player is dead.
 	bool damaged;                                               // True when the player gets damaged.
@@ -27,7 +27,7 @@ public class PlayerHealth : MonoBehaviour{
 		// Setting up the references.
 		//anim = GetComponent <Animator> ();
 		//playerAudio = GetComponent <AudioSource> ();
-		playerMovement = GetComponent <Movement> ();
+		playerMovement = GetComponent <PlayerControl> ();
 		//playerShooting = GetComponentInChildren <PlayerShooting> ();
 
 		// Set the initial health of the player.

@@ -14,7 +14,7 @@ public class EnemyHealth : MonoBehaviour {
 
 	Animator anim;                                              // Reference to the Animator component.
 	AudioSource playerAudio;                                    // Reference to the AudioSource component.
-	Movement enemyMovement;                                    // Reference to the player's movement.
+	PlayerControl enemyMovement;                                    // Reference to the player's movement.
 	EnemyShooting enemyShooting;                               // Reference to the PlayerShooting script.
 	public bool isDead;                                         // Whether the player is dead.
 	bool damaged;                                               // True when the player gets damaged.
