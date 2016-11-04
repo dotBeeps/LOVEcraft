@@ -1,0 +1,9 @@
+<d>
+  <m id="0">Test Dialogue ID 0</m>
+  <q id="2">
+    <m>Question with ID 2</m>
+    <r go="0" test="test">Returns to dialogue with ID 0</r>
+    <r go="1" test="test2">Advances to dialogue with ID 1</r>
+  </q>
+  <m id="1">rude.</m>
+</d>
