@@ -3,12 +3,17 @@ using System.Collections;
 using System.Xml;
 using System.IO;
 using System.Collections.Generic;
+using System.Linq;
+using System;
 
 public class DialogueLoader : MonoBehaviour {
 
     private TextAsset loadedXmlAsset;
-    [SerializeField]
-    public ArrayList dialogueList = new ArrayList();
+    private bool sendingDialogue = false;
+    private bool tickerReady = true;
+    private int currentId = 1;
+
+    private List<DialogueNode> dialogueList = new List<DialogueNode>();
 
     [System.Serializable]
     public struct DialogueNode
@@ -56,23 +61,55 @@ public class DialogueLoader : MonoBehaviour {
             } else if (reader.Name.Equals("m"))
             {
                 currentNode.id = int.Parse(reader.GetAttribute("id"));
+                if (reader.AttributeCount>1)
+                    currentNode.gotoId = int.Parse(reader.GetAttribute("go"));
+                else
+                    currentNode.gotoId = currentNode.id + 1;
                 currentNode.displayText = reader.ReadElementContentAsString();
                 currentNode.type = DialogueNode.DiagType.MESSAGE;
-                currentNode.gotoId = currentNode.id + 1;
             }
             if (currentNode.type != DialogueNode.DiagType.OTHER)
                 dialogueList.Add(currentNode);
         }
     }
 
+    public void UpdateTicker(bool ready)
+    {
+        tickerReady = ready;
+    }
+
+    public void UpdateNextDialogueId(int id)
+    {
+        currentId = id;
+    }
 
 	// Use this for initialization
 	void Start () {
         LoadXML("testdialogue");
+        sendingDialogue = true;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+	    if (sendingDialogue && tickerReady)
+        {
+            if (dialogueList.Exists(e => e.id == currentId))
+            {
+                DialogueNode messageNode = dialogueList.Where(e => e.id == currentId).FirstOrDefault();
+
+                SendMessage("DisplayText", messageNode.displayText);
+                if (messageNode.type == DialogueNode.DiagType.QUESTION)
+                {
+                    DialogueNode[] responses = Array.ConvertAll(messageNode.responses.ToArray(), item => (DialogueNode)item);
+                    SendMessage("DisplayResponse", responses);
+                }
+
+                Debug.Log(messageNode.gotoId);
+
+                currentId++;
+                if (messageNode.gotoId != 0)
+                    currentId = messageNode.gotoId;
+            }
+        }
 	}
 }

@@ -1,9 +1,19 @@
 <d>
-  <m id="0">Test Dialogue ID 0</m>
-  <q id="2">
-    <m>Question with ID 2</m>
-    <r go="0" test="test">Returns to dialogue with ID 0</r>
-    <r go="1" test="test2">Advances to dialogue with ID 1</r>
+  <m id="1">Yes, hallo, my name is neihbor lass.</m>
+  <m id ="2">You may be finding me the sexiness, but however am cultist.</m>
+  <q id="3">
+    <m>Are sure that are interested in me?</m>
+    <r go="5">Yes</r>
+    <r go="4">No</r>
   </q>
-  <m id="1">rude.</m>
+  <m id="4" go="3">Is not very nice, I ask again.</m>
+  <m id="5">Oh you so sweet.</m>
+  <q id="6">
+    <m>What is you favorite type of sacrifice?</m>
+    <r go="7">For the elder gods.</r>
+    <r go="7">Demonic</r>
+    <r go="7">For sonic.</r>
+    <r go="7">Bubonic</r>
+  </q>
+  <m id="7">Oh that's nice, me too.</m>
 </d>
