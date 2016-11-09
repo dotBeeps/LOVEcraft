@@ -50,7 +50,7 @@ public class EnemyProjectile : MonoBehaviour {
 	void OnCollisionEnter2D (Collision2D col){
 		//Check collision name
 		Debug.Log("collision name = " + col.gameObject.name);
-		if(col.gameObject.name != "enemy"){
+		if(!col.transform.tag.Equals("Enemy") || !col.transform.tag.Contains("Projectile")){
 			Destroy(gameObject);
 		}
 	}
