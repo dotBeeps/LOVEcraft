@@ -22,6 +22,13 @@ public class DialogueTicker : MonoBehaviour {
     private GameObject[] buttons;
     private int[] ids = new int[4];
 
+    [SerializeField]
+    private bool advanceUsed = false;
+    [SerializeField]
+    private float advanceBuffer;
+    [SerializeField]
+    float advanceBufferCount = 0;
+
 	// Use this for initialization
 	void Start () {
         buttons = new GameObject[4];
@@ -33,6 +40,30 @@ public class DialogueTicker : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+        
+        if (Input.GetAxis("AdvanceDialogue") == 0 && advanceUsed)
+        {
+            if (advanceBufferCount > advanceBuffer)
+            {
+                advanceUsed = false;
+                advanceBufferCount = 0;
+            }
+            else
+                advanceBufferCount+=Time.deltaTime;
+        }
+
+        if (Input.GetAxisRaw("AdvanceDialogue") == 1 && !advanceUsed && textBuffer.Count>0)
+        {
+            int i = textBuffer.Count;
+            while (i > 0)
+            {
+                diagText.text = diagText.text + textBuffer.Dequeue();
+                i = textBuffer.Count;
+                Debug.Log("Stuck in while loop.");
+            }
+            advanceUsed = true;
+        }
+
         // Don't try and output things if the textbuffer is empty.
         if (textBuffer.Count == 0)
         {
@@ -44,9 +75,10 @@ public class DialogueTicker : MonoBehaviour {
                 }
                 buttonsToActivate.Clear();
             }
-            if (Input.GetAxisRaw("AdvanceDialogue")==1 && !buttonsActive)
+            if (Input.GetAxisRaw("AdvanceDialogue")==1 && !buttonsActive && !advanceUsed)
             {
                 SendMessage("UpdateTicker", true);
+                advanceUsed = true;
             }
             return;
         }
@@ -64,7 +96,7 @@ public class DialogueTicker : MonoBehaviour {
             delay = 0f;
         }
         delay = delay + Time.deltaTime;
-	}
+    }
 
     public void DisplayText(string text)
     {
