@@ -80,7 +80,7 @@ public class GenerateMap : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         Debug.Log("MAP GENERATOR WAS STARTED");
-        GenerateRooms(100);
+        GenerateRooms(10);
 	}
 	
     void UpdateRoomNeighbors(Room[,] roomArr, List<Room> roomL)
