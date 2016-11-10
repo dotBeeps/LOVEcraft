@@ -52,7 +52,7 @@ public class EnemyHealth : MonoBehaviour {
 		GameController = GameObject.Find("GameController");
 		gameManager = GameController.GetComponent<GameManager>();
 		int damage = gameManager.getDamage();
-		if(col.gameObject.name == ""){	//change this to use tags!
+		if(col.transform.tag.Equals("Projectile")){	//change this to use tags! //I gotchu fam -David
 			damaged = true;
 			TakeDamage(damage);
 		}
