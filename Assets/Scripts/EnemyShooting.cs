@@ -18,7 +18,7 @@ public class EnemyShooting : MonoBehaviour {
 	//function to fire enemy projectile
 	void FireEnemyProjectile(){
 		//get reference to player
-		GameObject player = GameObject.Find("Player");
+		GameObject player = GameObject.FindGameObjectWithTag("Player");
 
 		if(player != null){ //if player isn't dead
 			//instantiate enemy projectile
@@ -31,7 +31,7 @@ public class EnemyShooting : MonoBehaviour {
 			Vector2 direction = player.transform.position - projectile.transform.position;
 
 			//adjust direction based on player movement
-			Movement Movement = player.GetComponent<Movement>();
+			PlayerControl Movement = player.GetComponent<PlayerControl>();
 			direction.x += (Movement.walkSpeed * Input.GetAxis("Horizontal")) / 4;
 			direction.y += (Movement.walkSpeed * Input.GetAxis("Vertical")) / 4;
 

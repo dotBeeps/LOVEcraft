@@ -48,7 +48,13 @@ public class EnemyProjectile : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D (Collision2D col){
+<<<<<<< HEAD
 		if(col.gameObject.name != "enemy"){
+=======
+		//Check collision name
+		Debug.Log("collision name = " + col.gameObject.name);
+		if(!col.transform.tag.Contains("Enemy") && !col.transform.tag.Contains("Projectile")){
+>>>>>>> refs/remotes/origin/master
 			Destroy(gameObject);
 		}
 	}

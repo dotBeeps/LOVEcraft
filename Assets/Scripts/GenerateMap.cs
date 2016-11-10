@@ -80,7 +80,7 @@ public class GenerateMap : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         Debug.Log("MAP GENERATOR WAS STARTED");
-        GenerateRooms(100);
+        GenerateRooms(45);
 	}
 	
     void UpdateRoomNeighbors(Room[,] roomArr, List<Room> roomL)
@@ -99,17 +99,6 @@ public class GenerateMap : MonoBehaviour {
         string arrayString = "";
         int x = roomArr.GetLength(0);
         int y = roomArr.GetLength(1);
-        for (int i = 0; i < y;i++)
-        {
-            for (int j = 0; j < x; j++)
-            {
-                if (roomArr[j, i] == null)
-                    arrayString += "O";
-                else
-                    arrayString += "X";
-            }
-            arrayString += "\n";
-        }
         Debug.Log(arrayString);
     }
 

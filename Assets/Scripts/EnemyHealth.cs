@@ -14,7 +14,7 @@ public class EnemyHealth : MonoBehaviour {
 
 	Animator anim;                                              // Reference to the Animator component.
 	AudioSource playerAudio;                                    // Reference to the AudioSource component.
-	Movement enemyMovement;                                    // Reference to the player's movement.
+	PlayerControl enemyMovement;                                    // Reference to the player's movement.
 	EnemyShooting enemyShooting;                               // Reference to the PlayerShooting script.
 	public bool isDead;                                         // Whether the player is dead.
 	bool damaged;                                               // True when the player gets damaged.
@@ -52,7 +52,7 @@ public class EnemyHealth : MonoBehaviour {
 		GameController = GameObject.Find("GameController");
 		gameManager = GameController.GetComponent<GameManager>();
 		int damage = gameManager.getDamage();
-		if(col.gameObject.name == ""){	//change this to use tags!
+		if(col.transform.tag.Equals("Projectile")){	//change this to use tags! //I gotchu fam -David
 			damaged = true;
 			TakeDamage(damage);
 		}
