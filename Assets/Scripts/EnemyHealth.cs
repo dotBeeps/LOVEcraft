@@ -51,7 +51,7 @@ public class EnemyHealth : MonoBehaviour {
 	void OnCollisionEnter2D (Collision2D col){
 		GameController = GameObject.Find("GameController");
 		gameManager = GameController.GetComponent<GameManager>();
-		int damage = gameManager.getDamage();
+        int damage = 10;
 		if(col.transform.tag.Equals("Projectile")){	//change this to use tags! //I gotchu fam -David
 			damaged = true;
 			TakeDamage(damage);

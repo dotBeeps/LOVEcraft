@@ -26,6 +26,9 @@ public class PlayerControl : MonoBehaviour {
     private float curSpeed;
     private new Rigidbody2D rigidbody;
     private Animator anim;
+    private SpriteRenderer spRen;
+    private float horOld = 0;
+    private float verOld = 0;
 
     [SerializeField]
     private float attackCooldown;
@@ -62,6 +65,7 @@ public class PlayerControl : MonoBehaviour {
     {
         rigidbody = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        spRen = GetComponent<SpriteRenderer>();
     }
 	
     void FixedUpdate()
@@ -136,61 +140,57 @@ public class PlayerControl : MonoBehaviour {
 
     private void DoMovement()
     {
-        rigidbody.velocity = new Vector2(Mathf.Lerp(0, Input.GetAxis("Horizontal") * walkSpeed, 0.8f), Mathf.Lerp(0, Input.GetAxis("Vertical") * walkSpeed, 0.8f));
-
         float hor = Input.GetAxisRaw("Horizontal");
         float ver = Input.GetAxisRaw("Vertical");
 
-        if (hor != 0 || ver != 0)
-            anim.SetBool("Walking", true);
-        if (hor == 0 && ver == 0)
-            anim.SetBool("Walking", false);
-
-        if (hor != 0 && !anim.GetBool("Sideways"))
+        if (hor != 0 && ver != 0)
         {
-            anim.SetBool("Sideways", true);
-            foreach (GameObject g in JimNorm)
-            {
-                g.SetActive(false);
-            }
-            foreach (GameObject g in JimSide)
-            {
-                g.SetActive(true);
-            }
+            hor = hor * 0.8f;
+            ver = ver * 0.8f; 
         }
 
-        if ((hor == 1 && facingLeft) || (hor == -1 && !facingLeft))
+        rigidbody.velocity = new Vector2(Mathf.Lerp(0, hor * walkSpeed, 0.8f), Mathf.Lerp(0, ver * walkSpeed, 0.8f));
+
+        hor = Input.GetAxisRaw("Horizontal");
+        ver = Input.GetAxisRaw("Vertical");
+
+        if (ver == 0 && hor == 0)
+            anim.Stop();
+
+        string toPlay = "";
+
+        if (hor == 1 && horOld != 1)
         {
-            facingLeft = !facingLeft;
-            transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y);
+            toPlay = "JimSide";
+            spRen.flipX = true;
+        }
+        if (hor == -1 && horOld != -1)
+        {
+            toPlay = "JimSide";
+            spRen.flipX = false;
+        }
+        if (ver == 1 && verOld != 1)
+            toPlay = "JimBack";
+        if (ver == -1 && verOld != -1)
+            toPlay = "JimForward";
+        if (ver == 0 && verOld != 0 && hor != 0)
+        {
+            toPlay = "JimSide";
+            spRen.flipX = hor == 1;
+        }
+        if (hor == 0 && horOld != 0 && ver == 1)
+            toPlay = "JimBack";
+        if (hor == 0 && horOld != 0 && ver == -1)
+            toPlay = "JimForward";
+
+        if (!toPlay.Equals(""))
+        {
+            Debug.Log("Playing anim: " + toPlay);
+            anim.Play(toPlay);
         }
 
-        if (ver != 0 && anim.GetBool("Sideways"))
-        {
-            anim.SetBool("Sideways", false);
-            foreach (GameObject g in JimNorm)
-            {
-                g.SetActive(true);
-            }
-            foreach (GameObject g in JimSide)
-            {
-                g.SetActive(false);
-            }
-        }
-        if (ver == 1)
-        {
-            //frontHead = JimNorm[0].GetComponent<SpriteRenderer>().sprite;
-            JimNorm[0].GetComponent<SpriteRenderer>().sprite = backHead;
-            //frontBody = JimNorm[1].GetComponent<SpriteRenderer>().sprite;
-            JimNorm[1].GetComponent<SpriteRenderer>().sprite = backBody;
-        }
-        if (ver == -1)
-        {
-            JimNorm[0].GetComponent<SpriteRenderer>().sprite = frontHead;
-            JimNorm[1].GetComponent<SpriteRenderer>().sprite = frontBody;
-        }
-        
-
+        horOld = hor;
+        verOld = ver;
     }
 
 

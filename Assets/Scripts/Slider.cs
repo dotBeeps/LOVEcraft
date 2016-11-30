@@ -12,7 +12,7 @@ public class Slider : MonoBehaviour {
 		// get the max health of the player.
 		GameController = GameObject.Find("GameController");
 		gameManager = GameController.GetComponent<GameManager>();
-		int maxHealth = gameManager.getHealth();
+		float maxHealth = gameManager.getHealth();
 
 		healthSlider.maxValue = maxHealth;
 	}
