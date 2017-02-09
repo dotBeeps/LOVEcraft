@@ -3,26 +3,38 @@ using System.Collections;
 
 public class enemyMove : MonoBehaviour {
     GameObject player;
-    float MoveSpeed = 2.5f;
+    public float speed;
+    public new Rigidbody2D body;
     // Use this for initialization
     void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
-        
-	}
-	
-	// Update is called once per frame
-	void FixedUpdate () {
-        
+        speed = 2.5f;
+
+    }
+
+    void Awake()
+    {
+        body = GetComponent<Rigidbody2D>();
+    }
+
+
+    // Update is called once per frame
+    void FixedUpdate() {
+
         Vector3 fixedTarget = player.transform.position;
-        transform.rotation = Quaternion.LookRotation(Vector3.forward, fixedTarget- transform.position);
-        if (Vector3.Distance(transform.position, player.transform.position) > 0)
+        transform.rotation = Quaternion.LookRotation(Vector3.forward, fixedTarget - transform.position);
+        Vector2 v = fixedTarget - gameObject.transform.position;
+        v.Normalize();
+        if (Vector3.Distance(gameObject.transform.position, fixedTarget) > 1)
         {
-            transform.position = Vector2.MoveTowards(transform.position, fixedTarget, MoveSpeed * Time.deltaTime);
+            body.velocity = v * speed;
         }
         else
         {
-            return;
+            body.velocity = new Vector3(0,0,0);
         }
 
+
+        }
 	}
-}
+
